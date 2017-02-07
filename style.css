@@ -1,0 +1,42 @@
+#art {
+height: 300px;
+border: 1px solid black;
+width: 400px;
+box-sizing: border-box;
+}
+.meta{
+border: 1px solid black;
+width: 400px;
+box-sizing: border-box;
+margin-bottom: 10px;
+}
+#seekbar {
+  border: 1px solid black;
+  height: 40px;
+  width: 400px;
+  box-sizing: border-box;
+  margin-bottom: 5px
+}
+.download {
+  border: 1px solid black;
+  width: 400px;
+  text-align: center;
+  display:block;
+  box-sizing: border-box;
+}
+.controls {
+  display: flex;
+  width: 400px;
+  box-sizing: border-box;
+}
+.controls button{
+  flex: 1;
+  border: 1px solid black;
+}
+.player-left {
+  width: 420px;
+  height: 580px;
+  border: 1px solid black;
+  padding: 10px;
+  box-sizing: border-box;
+}

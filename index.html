@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./netlabels.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <div class="player-left">
+  <img id="art" src="">
+  <p class="meta"></p>
+  <progress id="seekbar" value="0" max="1" style="width:400px;"></progress>
+  <audio id="player" src=""></audio><br>
+  <a class="download" href="">Free Download</a><br>
+<div class="controls">
+  <button onclick="document.getElementById('player').play()">Play</button>
+  <button onclick="document.getElementById('player').pause()">Pause</button>
+<button id="next" onclick="doTheThing();doTheThing();doThingTwo()">Next</button>
+<button id="prev">Prev.</button>
+  <button onclick="document.getElementById('player').volume += 0.1">Vol+ </button>
+  <button onclick="document.getElementById('player').volume -= 0.1">Vol- </button>
+  <button class="like">Like</button>
+</div>
+</div>
+<div id="favorites">
+  <ul id= "fav">Click "Like" to save a track to Favorites. Click on a track in Favorites to load it into the player.<br>
+    Favorites:
+  </ul>
+</div>
+
+
+  <script>
+  var c = 0
+  var play = [];
+  var filenames = []
+  var favorites = JSON.parse(localStorage.getItem("favorites4")) || []
+  var h;
+  for (var i = 0; i< 10; i++) {
+    var random = Math.floor(Math.random() * ids.length)
+    play.push(ids[random])
+  }
+  for (var i = 0; i< play.length; i++) {
+    h = play[i]["identifier"]
+    $.get("https://archive.org/metadata/"+ play[i]["identifier"], function(data){
+    })
+    .then(function(data){
+      var files = data.files.filter(function(el, ind, arr){
+        return el["format"] === "VBR MP3" || el["format"] === "Ogg Vorbis"
+      })
+      var images = data.files.filter(function(el, ind, arr){
+        return el["format"] === "JPEG"
+      })
+      x = files.length
+      var o = images.length
+      var imageNum = Math.floor(Math.random() * o)
+      var number = Math.floor(Math.random() * x)
+      // console.log(files[number]["name"])
+      var img = images[imageNum]["name"]
+      var name = files[number]["name"];
+      // console.log(files[number])
+      // console.log(play[i])
+      if (!!img){
+      var imageurl = "https://archive.org/download/" + data.metadata.identifier + "/" + img}
+      else {
+        var imageurl = "https://placehold.it/400x300"
+      };
+      var url = "https://archive.org/download/" + data.metadata.identifier + "/" + name;
+      console.log(data);
+      filenames.push({'url': url, 'name': name, 'id': data.metadata.title, "artist": data.metadata.creator, "img": imageurl});
+      if ($('#player').attr("src") == ""){
+        $('#player').attr("src", url)
+        $('#art').attr("src", imageurl || "https://placehold.it/400x300")
+        $('.download').attr("href", url)
+        $('.meta').html('<p>' + name +'<br>' + data.metadata.creator + '<br>' + data.metadata.title + '</p>')
+      }
+    })
+  }
+  $('#player').on('timeupdate', function() {
+    $('#seekbar').attr("value", this.currentTime / this.duration);
+
+});
+$('.like').on("click", function(){
+  favorites.push(filenames[c]);
+  var id = favorites.length - 1
+  console.log(favorites)
+  $('#fav').append("<li class='f' id="+ id+"><button class='remove'>Remove</button>" +filenames[c].url + "</li>")
+  localStorage.setItem("favorites4", JSON.stringify(favorites))
+})
+$(document).on("click", "li", function(){
+  var y = $(this).attr("id")
+  console.log(y)
+  $('#player').attr('src',  favorites[y].url);
+  $('#art').attr("src", favorites[y].img || "https:placehold.it/400x300");
+  document.getElementById('player').play(); $('.download').attr('href', favorites[y].url);
+  $('.meta').html('<p>' + favorites[y].name +'<br>' + favorites[y].artist + '<br>' + favorites[y].id + '</p>')
+})
+$(document).on("click", ".remove", function(ev){
+  ev.stopPropagation();
+  var y = $(this).attr("id")
+  console.log(y)
+  favorites.splice(y, 1)
+  $(this).parent().remove();
+  localStorage.setItem("favorites4", JSON.stringify(favorites))
+})
+$(document).ready(function(){
+  for (var i = 0; i< favorites.length; i++){
+    $('#fav').append("<li class='f' id="+i+"><button class='remove'>Remove</button>" +favorites[i].url + "</li>")
+  }
+})
+function doTheThing(){
+  $.get("https://archive.org/metadata/"+ play[play.length-1]["identifier"], function(data){
+  })
+  .then(function(data){
+
+    var files = data.files.filter(function(el, ind, arr){
+      return el["format"] === "VBR MP3" || el["format"] === "Ogg Vorbis"
+    })
+    var images = data.files.filter(function(el, ind, arr){
+      return el["format"] === "JPEG"
+    })
+    var o = images.length
+    var imageNum = Math.floor(Math.random() * o)
+    // console.log(files[number]["name"])
+    var img = images[imageNum]["name"]
+    // console.log(files[number])
+    // console.log(play[i])
+    if (!!img){
+    var imageurl = "https://archive.org/download/" + data.metadata.identifier + "/" + img}
+    else {
+      var imageurl = "https://placehold.it/400x300"
+    };
+    x = files.length
+    var number = Math.floor(Math.random() * x)
+    // console.log(files[number]["name"])
+    var name = files[number]["name"];
+    // console.log(files[number])
+    // console.log(play[i])
+    var url = "https://archive.org/download/" + data.metadata.identifier + "/" + name;
+    console.log(data);
+    filenames.push({'url': url, 'name': name, 'id': data.metadata.identifier, "artist": data.metadata.creator, "img": imageurl});
+  })
+  var random = Math.floor(Math.random() * ids.length)
+  play.push(ids[random]);
+}
+function doThingTwo() {
+  c++;
+  $('#player').attr('src',  filenames[c].url); console.log(filenames[c].img); document.getElementById('player').play(); $('.download').attr('href', filenames[c].url);
+  $('#art').attr("src", filenames[c].img || "https://placehold.it/400x300");
+ $('.meta').html('<p>' + filenames[c].name +'<br>' + filenames[c].artist + '<br>' + filenames[c].id + '</p>')
+};
+$('#prev').on("click", function() {
+  c--;
+  $('#player').attr('src',  filenames[c].url); console.log(filenames[c].img); document.getElementById('player').play(); $('.download').attr('href', filenames[c].url);
+  $('#art').attr("src", filenames[c].img || "https://placehold.it/400x300");
+ $('.meta').html('<p>' + filenames[c].name +'<br>' + filenames[c].artist + '<br>' + filenames[c].id + '</p>')
+})
+$('#seekbar').on("click", function(e) {
+  var rect = this.getBoundingClientRect();
+    var x = e.clientX - rect.left;
+    var y = e.clientY - rect.top;
+    var player = document.getElementById('player');
+    var z = (x/400 )* player.duration;
+    console.log(z)
+    player.currentTime = z;
+  })
+var player = document.getElementById('player');
+player.onended = function(){
+  $('#next').click();
+}
+  </script>
