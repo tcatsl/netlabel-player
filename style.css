@@ -1,42 +1,248 @@
 #art {
 height: 300px;
-border: 1px solid black;
+border: 2px solid black;
 width: 400px;
 box-sizing: border-box;
+margin-bottom: 5px
 }
-.meta{
-border: 1px solid black;
-width: 400px;
-box-sizing: border-box;
-margin-bottom: 10px;
-}
-#seekbar {
-  border: 1px solid black;
-  height: 40px;
+.art-cont {
+  border: 0;
   width: 400px;
-  box-sizing: border-box;
+  height: 300px;
+  padding: 0;
   margin-bottom: 5px
 }
+.meta{
+border: 2px solid black;
+width: 400px;
+box-sizing: border-box;
+margin-bottom: 5px;
+margin-top: 5px;
+padding-left: 10px;
+padding-right: 10px;
+overflow-x:hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+float:left;
+background-color: honeydew;
+padding-top: 0;
+padding-bottom: 0
+}
+.meta p{
+  overflow-x:hidden;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow-x:hidden;
+  float: left;
+  width: 360px;
+  margin: 0;
+  padding: 0
+}
+#seekbar {
+  border: 2px solid black;
+  height: 55px;
+  width: 400px;
+  box-sizing: border-box;
+  color: turquoise;
+  background-color: darkgray;
+  margin-top: 5px;
+  padding: 0;
+  cursor: pointer;
+}
+#seekbar::-webkit-progress-bar {
+	background: darkgray;
+}
+#seekbar::-webkit-progress-value {
+	background: turquoise;
+}
 .download {
-  border: 1px solid black;
+  border: 2px solid black;
   width: 400px;
   text-align: center;
-  display:block;
+  display:inline-block;
   box-sizing: border-box;
+  padding: 0;
+  margin-top: 5px;
+  height: 20px;
+  margin-bottom: 5px;
 }
 .controls {
   display: flex;
   width: 400px;
   box-sizing: border-box;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0;
+  border: 1px solid black;
 }
 .controls button{
   flex: 1;
   border: 1px solid black;
+  background-color: darkgray;
+  height: 50px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0
 }
 .player-left {
-  width: 420px;
-  height: 580px;
-  border: 1px solid black;
+  width: 100%;
+  height: 100%;
   padding: 10px;
   box-sizing: border-box;
+  flex: 1;
+  margin: 0;
+  background-color: white;
+  margin: 0;
+  border: 1px solid black
+}
+ul {
+  display:block;
+  box-sizing: border-box;
+  border: 2px solid black;
+  width: 376px;
+  float:left;
+  background-color: honeydew;
+  margin: 10px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+li {
+  display:block;
+  box-sizing: border-box;
+  border: 2px solid black;
+  width: 356px;
+  overflow:hidden;
+  white-space:normal;
+  float:left;
+  word-break: break-all;
+  background-color: white;
+  margin-top:1px;
+  margin-bottom: 1px;
+}
+.player-whole{
+  display: flex;
+  padding: 0;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-top: 1px solid black;
+  margin: auto;
+  box-sizing: border-box;
+  width: 424px;
+  height: 607px;
+  background-color: black;
+  border-bottom: 1px solid black;
+}
+
+.player-right{
+  flex: 1;
+  box-sizing: border-box;
+  border: 1px solid black;
+  width: 100%;
+  height: 100%;
+  background-color: darkgray;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin: 0;
+  display: none;
+}
+li:hover{
+  color: white;
+  background-color: #000;
+  cursor: pointer;
+}
+.download:hover {
+  color: white;
+  background-color: turquoise;
+  text-decoration: none;
+  cursor: pointer;
+}
+a:visited {
+  color: black;
+  background-color: darkgray;
+  text-decoration: none;
+}
+a:active{
+  color: white;
+  background-color: turquoise;
+  text-decoration: none;
+}
+a:link{
+  color: black;
+  background-color: darkgray;
+  text-decoration: none;
+}
+button:hover{
+  color: white;
+  background-color: turquoise;
+  cursor: pointer;
+}
+li button {
+  background: darkgray;
+  margin-right: 5px;
+}
+h4 {
+  float: right;
+  margin-right: 10px;
+  margin-left: 10px
+}
+h1 {
+  margin-left: 10px
+}
+*{
+  font-family: 'VT323', monospace;
+}
+li button:hover {
+  background: turquoise;
+  color: white
+}
+.favor {
+  font-size: 10px
+}
+.hideShow button{
+  flex: 1;
+  border: 1px solid black;
+  background-color: darkgray;
+  height: 20px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0
+}
+.hideShow button:hover{
+  background: turquoise;
+  color: white
+}
+.hideShow {
+  display: flex;
+  width: 400px;
+  box-sizing: border-box;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0;
+  border: 1px solid black;
+}
+.player-right2{
+  flex: 1;
+  box-sizing: border-box;
+  border: 1px solid black;
+  width: 100%;
+  height: 100%;
+  background-color: darkgray;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin: 0;
+  display: none;
+}
+.hideShow button{
+  font-size: 15px
+}
+h1 {
+  font-size: 28px;
+  margin: 10px
 }
