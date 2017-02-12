@@ -9,7 +9,7 @@ var filenames = [];
 var playPause = 0;
 var favorites = JSON.parse(localStorage.getItem("favorites4")) || []
 var h;
-for (var i = 0; i< 25; i++) {
+for (var i = 0; i< 24; i++) {
   var random = Math.floor(Math.random() * ids.length)
   play.push(ids[random])
 }
@@ -19,16 +19,23 @@ $(document).on("click", ".remove", function(ev){
   console.log(y)
   localStorage.setItem("favorites4", JSON.stringify(favorites));
   $('#fav').empty()
-  $('#fav').html("click the <i class='material-icons favor'>favorite</i> button to save a track to favorites.<br>click on a track in favorites to load it into the player.<br><br>favorites:")
+  $('#fav').html("click the <i class='material-icons favor'>favorite</i> button to save a track to favorites.<br>click on a track in favorites to load it into the player.<br><button class='playAll'>play all</button><br><br>favorites:")
   for (var i = 0; i< favorites.length; i++){
     $('#fav').append("<li class='f' id="+i+"><button class='remove'>Remove</button>" +(favorites[i].artist || "untagged") + " - " + favorites[i].name + "</li>")
   };
   if (iphone == true || android == true){
     $('li').css("width", "376px")
   }
+  $('.playAll').on("click", function(){
+    for (var m = 0; m <favorites.length; m++){
+    filenames.splice(c+1 + m, 0, favorites[m]);
+    }
+    updatePlaylist()
+    $('#next').click()
+  })
   ev.stopPropagation();
 })
-for (var i = 0; i< play.length; i++) {
+for (var i = 0; i< 24; i++) {
   h = play[i]["identifier"]
   $.get("https://archive.org/metadata/"+ play[i]["identifier"], function(data){
   })
@@ -165,8 +172,17 @@ $(document).ready(function(){
   $('#plyPaus').on('click', function(){
     playPaus()
   })
+  $('.playAll').on("click", function(){
+    for (var m = 0; m <favorites.length; m++){
+    var x = c + m + 1
+    filenames.splice(x, 0, favorites[m]);
+    }
+    $('#next').click()
+  })
 })
 function doTheThing(){
+  var e = filenames.length - c
+  if (e < 25) {
   $.get("https://archive.org/metadata/"+ play[play.length-1]["identifier"], function(data){
   })
   .then(function(data){
@@ -220,14 +236,16 @@ function doTheThing(){
     if (!!name){
       var f = {'url': url, 'name': (files[number]["title"] || name || "untagged"), 'id': (files[number]["album"] || data.metadata.identifer || "untagged"), "artist": (files[number]["artist"] || data.metadata.creator || "untagged"), "date": data.metadata.publicdate, "img": imageurl}
       filenames.push(f);
-    updatePlaylist();
     if ($('#player').attr("src") == ""){
       $('#player').attr("src", url)
       $('#art').attr("src", imageurl || "https://placehold.it/400x300")
       $('.download').attr("href", url)
       $('.meta').html('<p>track: ' + (files[number]["title"] || name || "untagged") +'<br>artist: ' + (files[number]["artist"] || data.metadata.creator || "untagged") + '<br>album: ' + (files[number]["album"] || data.metadata.title || "untagged") + '<br>date: ' +data.metadata.publicdate +'</p>')
     }
-    return f
+    updatePlaylist();
+    if (e < 25) {
+      doTheThing()
+    }
   } else {
     doTheThing()
   }
@@ -237,6 +255,7 @@ function doTheThing(){
   })
   var random = Math.floor(Math.random() * ids.length)
   play.push(ids[random]);
+}
 }
 function playPaus() {
   if (playPause == 0) {
@@ -253,7 +272,7 @@ function playPaus() {
     document.getElementById('player').pause(); $('#plyPaus').html('<i class="material-icons">play_arrow</i>'); playPause = 0;
 
   }
-  updatePlaylist()
+  updatePlaylist();
 }
 function doThingTwo() {
   c++;
@@ -452,8 +471,6 @@ function updatePlaylist(){
       var player = document.getElementById('player')
       player.play()
     }
-    for (var k = 0; k <= q; k++){
       doTheThing()
-    }
   })
 }
