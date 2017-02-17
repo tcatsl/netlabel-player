@@ -3,16 +3,18 @@
   <title>listen to netlabels!</title>
   <head>
     <meta name="viewport" content="width=device-width">
+    <script src="/socket.io/socket.io.js"></script>
+    <script> var socket = io('/chat'); </script>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="./style.css">
-    <script src="./netlabels.js"></script>
+    <link rel="stylesheet" href="./assets/style.css">
+    <script src="./assets/netlabels.js"></script>
     <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   </head>
   <body>
     <header>
-      <h1>netlabel audio player</h1>
+      <h1>netlabel-player</h1>
     </header>
     <div class="player-whole container-fluid">
       <div class="player-left">
@@ -30,10 +32,11 @@
           <button id="volUp"><i class="material-icons">volume_up</i></button>
           <button id="like"><i class="material-icons">favorite</i></button>
         </div>
-        <a class="download" href="" download>click here for free download via archive.org</a>
+        <div class="links"><a class="download" href="" download>free download</a><a class="release" target="_blank">release page</a><a id="license" class="license" target="_blank">license</a></div>
         <div class="hideShow">
           <button id="shfav">show favorites</button>
           <button id="shupnext">show up next</button>
+          <button id="shchat">show chat</button>
         </div>
       </div>
       <div class="player-right">
@@ -42,7 +45,7 @@
             click the <i class="material-icons favor">favorite</i> button to save a track to favorites.
             <br>
             click on a track in favorites to load it into the player.<br>
-            <button class="playAll">play all</button>
+            <button class="playAll">play all</button><button class="shuffleAll">shuffle all</button>
             <br>
             <br>
             favorites:
@@ -56,12 +59,30 @@
           </ul>
         </div>
       </div>
-    </div>
-    </div>
-
+      <div class="player-right3" id="right3">
+          <div id = "chat">
+          <ul id = "messages">
+            <p id=users>users online: 1</p>
+            <p>when a user shares a track, click on it to load it into the player<br>please note that .ogg files will not appear for ios users.</p>
+          </ul>
+          <ul id="chattin">
+          <form onsubmit = "return false" action = "">
+            <div id = "inputField">
+              <input id = "inputTextBox" autocomplete="off"/>
+              <div id="chbuttons">
+              <button id="send">send</button><button id="postplay">post now playing</button></div></div>
+            </ul>
+            </div>
+          </form>
+        </ul>
+        </div>
+      </div>
+<!-- <div id="slider"><input id="pitch" type="range" min="85" max="115" step="0.1" value="100"/></div> -->
     <footer>
       <h4>this site plays randomized tracks from the internet archive's netlabels collection.</h4>
+
     </footer>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="./main.js"></script>
+    <script src="./assets/main.js"></script>
+    <script src="./assets/chat.js"></script>
   </body>

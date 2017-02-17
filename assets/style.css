@@ -56,16 +56,48 @@ padding-bottom: 0
 #seekbar::-webkit-progress-value {
 	background: turquoise;
 }
+#seekbar::-moz-progress-bar {
+	background: turquoise;
+}
+#seekbar::-moz-progress-value {
+	background: turquoise;
+}
 .download {
-  border: 2px solid black;
-  width: 400px;
+  border: 1px solid black;
+  flex: 1;
+  width: 100%;
   text-align: center;
   display:inline-block;
   box-sizing: border-box;
   padding: 0;
-  margin-top: 5px;
+}
+.release {
+  border: 1px solid black;
+  width: 100%;
+  flex: 1;
+  text-align: center;
+  display:inline-block;
+  box-sizing: border-box;
+  padding: 0;
+}
+.license {
+  border: 1px solid black;
+  width: 100%;
+  flex: 1;
+  text-align: center;
+  display:inline-block;
+  box-sizing: border-box;
+  padding: 0;
+}
+.links{
+  border: 1px solid black;
+  margin-top: 10px;
   height: 20px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+  width: 100%;
+  display: flex;
+  color: black;
+  background-color: darkgray
 }
 .controls {
   display: flex;
@@ -103,7 +135,7 @@ ul {
   display:block;
   box-sizing: border-box;
   border: 2px solid black;
-  width: 376px;
+  width: 400px;
   float:left;
   background-color: honeydew;
   margin: 10px;
@@ -111,6 +143,11 @@ ul {
   padding-top: 10px;
   padding-left: 10px;
   padding-right: 10px;
+}
+ul > button {
+  background: darkgray;
+  color: black;
+  border: 1px solid black
 }
 li {
   display:block;
@@ -151,28 +188,54 @@ li {
   margin: 0;
   display: none;
 }
-li:hover{
+.itemInList:hover{
   color: white;
   background-color: #000;
   cursor: pointer;
 }
-.download:hover {
+.f:hover{
+  color: white;
+  background-color: #000;
+  cursor: pointer;
+}
+#chat .chattracks:hover{
+  color: white;
+  background-color: #000;
+  cursor: pointer;
+}
+.links:hover {
   color: white;
   background-color: turquoise;
   text-decoration: none;
   cursor: pointer;
 }
-a:visited {
+
+.links .license:visited {
   color: black;
   background-color: darkgray;
   text-decoration: none;
 }
-a:active{
+.links .license:active{
   color: white;
   background-color: turquoise;
   text-decoration: none;
 }
-a:link{
+.links .license:link{
+  color: black;
+  background-color: darkgray;
+  text-decoration: none;
+}
+.links a:visited {
+  color: black;
+  background-color: darkgray;
+  text-decoration: none;
+}
+.links a:active{
+  color: white;
+  background-color: turquoise;
+  text-decoration: none;
+}
+.links a:link{
   color: black;
   background-color: darkgray;
   text-decoration: none;
@@ -182,12 +245,16 @@ button:hover{
   background-color: turquoise;
   cursor: pointer;
 }
-.playAll {
-  border: 2px solid black
+.playAll, .shuffleAll {
+  border: 2px solid black;
+  margin-right: 10px
 }
-ul button {
+.remove2, .add {
   background: darkgray;
   margin-right: 5px;
+}
+.remove {
+  background: darkgray
 }
 h4 {
   float: right;
@@ -249,4 +316,115 @@ li button:hover {
 h1 {
   font-size: 28px;
   margin: 10px
+}
+/*#pitch {
+  width: 100%;
+  flex: 1;
+  display: inline-block;
+}
+#slider {
+  display: flex;
+  width: 400px;
+  justify-content: center;
+  margin: auto
+}*/
+.player-right3{
+  flex: 1;
+  box-sizing: border-box;
+  border: 1px solid black;
+  width: 100%;
+  height: 100%;
+  background-color: darkgray;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin: 0;
+  display: none;
+}
+#chat {
+        padding-top: 10px;
+        box-sizing: border-box;
+        width: 400px;
+        margin: 0
+}
+
+#chat li {
+  display:block;
+  box-sizing: border-box;
+  border: 2px solid black;
+  width: 356px;
+  overflow:hidden;
+  white-space:normal;
+  float:left;
+  word-break: break-all;
+  background-color: white;
+  margin-top:1px;
+  margin-bottom: 1px;
+}
+
+
+#messages {
+        margin-top: 0;
+        margin-bottom: 10px;
+        height: 92%
+}
+
+form {
+        position: relative;
+        height: 8%;
+        width: 100%;
+}
+
+#inputField {
+        position: relative;
+        bottom: 0;
+        width: 95%;
+        height: 50px;
+        display: flex;
+        border: 1px solid black
+}
+
+#inputField input {
+        box-sizing: border-box;
+        width: 100%;
+        border: 1px solid black;
+        flex: 1;
+        word-break: break-word;
+}
+#chattin {
+  padding: 10px
+}
+#postplay, #send {
+  background: darkgray;
+  color: black;
+  border: 1px solid black;
+  flex: 1
+}
+#chbuttons {
+  width: 100%;
+  display: flex;
+  flex: 1
+}
+.links a:hover{
+  background: turquoise;
+  color: white
+}
+#chbuttons button:hover{
+  background: turquoise;
+  color: white
+}
+#shfav:hover{
+  background: turquoise;
+  color: white
+}
+#shchat:hover{
+  background: turquoise;
+  color: white
+}
+#shupnext:hover{
+  background: turquoise;
+  color: white
+}
+#license:hover{
+  background: turquoise;
+  color: white
 }
