@@ -3,7 +3,7 @@ var app = express();
 var http = require("http").Server(app);
 var io = require("socket.io")(http);
 var path = require("path");
-var PORT = process.env.PORT;
+var PORT = process.env.PORT || 3001;
 
 app.use("/assets/", express.static(__dirname + "/assets"));
 
