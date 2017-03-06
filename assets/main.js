@@ -72,17 +72,18 @@ for (var i = 0; i< 24; i++) {
   })
   .then(function(data){
     //prevent ios and safari from getting oggs
+    if(!!data.files){
     if (iphone == false && safari == false && ipad == false){
       var files = data.files.filter(function(el, ind, arr){
         var re = /MP3/
         var re4 = /zip/i
-        return el["format"] === "VBR MP3" || el["format"] === "Ogg Vorbis" || (re.test(el["format"]) && re4.test(el["format"] == false))
+        return el["format"] === "VBR MP3" || el["format"] === "Ogg Vorbis" || (re.test(el["format"]))
       })
     } else {
       var files = data.files.filter(function(el, ind, arr){
         var re = /MP3/
         var re4 = /zip/i
-        return el["format"] === "VBR MP3" || (re.test(el["format"]) && re4.test(el["format"] == false))
+        return el["format"] === "VBR MP3" || (re.test(el["format"]))
       })
     }
     //resort to pngs only if no jpegs are present
@@ -120,23 +121,36 @@ for (var i = 0; i< 24; i++) {
     var url = "https://archive.org/download/" + data.metadata.identifier + "/" + name;
     var releaseurl = "https://archive.org/details/" + data.metadata.identifier
     var license = data.metadata.licenseurl
-    if (!!name){
+    var re01 = /sute/i
+    var re02 = /instabil/i
+    var re03 = /kyoto/i
+    var re04 = /KY_D/i
+    if (!!license){
+      console.log(data.metadata.identifier)
+      console.log(name)
+      if (!!name){
       //push to playlist if valid audio file was found
-      filenames.push({'license': license, 'releaseurl': releaseurl, 'url': url, 'name': (files[number]["title"] || name || "untagged"), 'id': (files[number]["album"] || data.metadata.identifier || "untagged"), "artist": (files[number]["artist"] || data.metadata.creator || "untagged"), "date": data.metadata.publicdate, "img": imageurl});
+        filenames.push({'license': license, 'releaseurl': releaseurl, 'url': url, 'name': (files[number]["title"] || name || "untagged"), 'id': (files[number]["album"] || data.metadata.identifier || "untagged"), "artist": (files[number]["artist"] || data.metadata.creator || "untagged"), "date": data.metadata.publicdate, "img": imageurl});
 
-      // update src, links, image, and metadata
-      if ($('#player').attr("src") == ""){
-        $('#player').attr("src", url)
-        $('#art').attr("src", imageurl || "https://placehold.it/400x300")
-        $('.download').attr("href", url)
-        $('.release').attr('href', releaseurl || "https://archive.org/search.php?query=" + data.metadata.identifier);
-        $('.license').attr('href', license || "please research this track before use");
-        $('.meta').html('<p>track: ' + (files[number]["title"] || name || "untagged") +'<br>artist: ' + (files[number]["artist"] || data.metadata.creator || "untagged") + '<br>album: ' + (files[number]["album"] || data.metadata.title || "untagged") + '<br>date: ' +data.metadata.publicdate +'</p>')
-      }
-    } else {
+        // update src, links, image, and metadata
+        if ($('#player').attr("src") == ""){
+          $('#player').attr("src", url)
+          $('#art').attr("src", imageurl || "https://placehold.it/400x300")
+          $('.download').attr("href", url)
+          $('.release').attr('href', releaseurl || "https://archive.org/search.php?query=" + data.metadata.identifier);
+          $('.license').attr('href', license || "please research this track before use");
+          $('.meta').html('<p>track: ' + (files[number]["title"] || name || "untagged") +'<br>artist: ' + (files[number]["artist"] || data.metadata.creator || "untagged") + '<br>album: ' + (files[number]["album"] || data.metadata.title || "untagged") + '<br>date: ' +data.metadata.publicdate +'</p>')
+        }
+      } else {
       //get another file if no files found
       doTheThing()
     }
+    } else{
+      doTheThing()
+    }
+  }else {
+    doTheThing()
+  }
     updatePlaylist()
   })
   .catch(function(error){
@@ -251,13 +265,15 @@ function doTheThing(){
   $.get("https://archive.org/metadata/"+ play[play.length-1]["identifier"], function(data){
   })
   .then(function(data){
+    if (!!data.files){
     if (iphone == false && safari == false || ipad == false){
     var files = data.files.filter(function(el, ind, arr){
       var re = /MP3/
       var re4 = /zip/i
-      return el["format"] === "VBR MP3" || el["format"] === "Ogg Vorbis" || (re.test(el["format"]) && re4.test(el["format"] == false))
+      return el["format"] === "VBR MP3" || el["format"] === "Ogg Vorbis" || (re.test(el["format"]))
     })}
     else {
+
       var files = data.files.filter(function(el, ind, arr){
         var re = /MP3/
         var re4 = /zip/i
@@ -300,26 +316,37 @@ function doTheThing(){
   }
   // console.log(files[number])
   // consol
-    if (!!name){
-      var f = {'license': license, 'releaseurl': releaseurl, 'url': url, 'name': (files[number]["title"] || name || "untagged"), 'id': (files[number]["album"] || data.metadata.identifer || "untagged"), "artist": (files[number]["artist"] || data.metadata.creator || "untagged"), "date": data.metadata.publicdate, "img": imageurl}
-      filenames.push(f);
-    if ($('#player').attr("src") == ""){
-      $('#player').attr("src", url)
-      $('#art').attr("src", imageurl || "https://placehold.it/400x300")
-      $('.download').attr("href", url)
-      $('.license').attr('href', license || "please research this track before use");
-      $('.release').attr("href", releaseurl || "https://archive.org/search.php?query=" + data.metadata.id)
-      $('.meta').html('<p>track: ' + (files[number]["title"] || name || "untagged") +'<br>artist: ' + (files[number]["artist"] || data.metadata.creator || "untagged") + '<br>album: ' + (files[number]["album"] || data.metadata.title || "untagged") + '<br>date: ' +data.metadata.publicdate +'</p>')
-    }
+  var re01 = /sute/i
+  var re02 = /instabil/i
+  var re03 = /kyoto/i
+  var re04 = /KY_D/i
+  if (!!license || re01.test(data.metadata.identifier)|| re02.test(data.metadata.identifier)|| re03.test(data.metadata.identifier)||  re04.test(data.metadata.identifier)){
+      if (!!name){
+        var f = {'license': license, 'releaseurl': releaseurl, 'url': url, 'name': (files[number]["title"] || name || "untagged"), 'id': (files[number]["album"] || data.metadata.identifer || "untagged"), "artist": (files[number]["artist"] || data.metadata.creator || "untagged"), "date": data.metadata.publicdate, "img": imageurl}
+        filenames.push(f);
+        if ($('#player').attr("src") == ""){
+        $('#player').attr("src", url)
+        $('#art').attr("src", imageurl || "https://placehold.it/400x300")
+        $('.download').attr("href", url)
+        $('.license').attr('href', license || "please research this track before use");
+        $('.release').attr("href", releaseurl || "https://archive.org/search.php?query=" + data.metadata.id)
+        $('.meta').html('<p>track: ' + (files[number]["title"] || name || "untagged") +'<br>artist: ' + (files[number]["artist"] || data.metadata.creator || "untagged") + '<br>album: ' + (files[number]["album"] || data.metadata.title || "untagged") + '<br>date: ' +data.metadata.publicdate +'</p>')
+      }
     //recursion to maintain upcoming tracks
-    if (e < 25) {
+      if (e < 25) {
+        doTheThing()
+      }
+    } else {
+    //get another track if no file found
       doTheThing()
     }
   } else {
-    //get another track if no file found
     doTheThing()
   }
-  })
+} else {
+  doTheThing()
+}
+})
   .catch(function(error){
     console.log(error)
   })
@@ -384,6 +411,12 @@ $('#seekbar').on("click", function(e) {
   var player = document.getElementById('player');
   var z = (x/400 )* player.duration;
   player.currentTime = z;
+})
+$('#seekbar').on("slide", "change", function(e) {
+  var x = (this).attr(.value)
+  var z = (x/1 )* player.duration;
+  player.currentTime = z;
+  console.log("aaaa")
 })
 //when you click the next button
 $('#next').on("click", function(){
