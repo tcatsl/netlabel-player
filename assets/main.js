@@ -413,7 +413,7 @@ $('#seekbar').on("click", function(e) {
   player.currentTime = z;
 })
 $('#seekbar').on("slide", "change", function(e) {
-  var x = (this).attr(.value)
+  var x = (this).attr(e.value)
   var z = (x/1 )* player.duration;
   player.currentTime = z;
   console.log("aaaa")
